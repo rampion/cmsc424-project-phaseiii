@@ -1,1 +1,19 @@
 Repository for rails implementation of phase III of the CMSC424 class project.
+
+MySQL installed by
+  downloading mysql-5.0.77-osx10.5-x86.dmg
+  - install pkg, startupitem, prefpane & started server
+  - !important! - use 32-bit - mysql.gem won't work with 64-bit
+  gem install mysql -- --with-mysql-config=/usr/local/mysql/bin/mysql_config
+
+Sequence of commands thus far:
+  > rails -d mysql dvd_club # create project
+  > cd dvd_club
+  > rake db:create # create the mysql database
+  > script/generate migration create_tables 
+  > vim db/migrate/20090503234102_create_tables.rb # create the tables
+  # then later
+  > rake db:migrate # create the tables defined in last migration
+  # and if I change my midn
+  > rake db:rollback # undo previous migration
+
