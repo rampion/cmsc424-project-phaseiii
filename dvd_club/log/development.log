@@ -1,0 +1,307 @@
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (2.9ms)[0m   [0mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (6.7ms)[0m   [0;1mCREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`)[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+  [4;35;1mSQL (3.2ms)[0m   [0mCREATE TABLE `rental_plans` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `rate` decimal(63,2) NOT NULL, `billing_cycle_length` int(11) NOT NULL, `max_rented_out` int(11) NOT NULL, `dvds_per_month` int(11) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.8ms)[0m   [0;1mCREATE TABLE `customers` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `date_subscribed` datetime NOT NULL, `rental_plan_id` int(11), `name` varchar(255) NOT NULL, `address` varchar(255) NOT NULL, `phone_number` varchar(255) NOT NULL, `credit_limit` decimal(63,2) NOT NULL, `last_bill_end_date` datetime NOT NULL, `balance` decimal(63,2) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20090503234102')[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (2.4ms)[0m   [0mSHOW FIELDS FROM `customers`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mdescribe `customers`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW KEYS FROM `customers`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `rental_plans`[0m
+  [4;35;1mSQL (2.5ms)[0m   [0mdescribe `rental_plans`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW KEYS FROM `rental_plans`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+  [4;36;1mSQL (1.8ms)[0m   [0;1mDROP TABLE `customers`[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mDROP TABLE `rental_plans`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20090503234102'[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+  [4;36;1mSQL (3.4ms)[0m   [0;1mCREATE TABLE `rental_plans` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `rate` decimal(63,2) NOT NULL, `billing_cycle_length` int(11) NOT NULL, `max_rented_out` int(11) NOT NULL, `dvds_per_month` int(11) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (2.8ms)[0m   [0mCREATE TABLE `customers` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `date_subscribed` datetime NOT NULL, `rental_plan_id` int(11), `name` varchar(255) NOT NULL, `address` varchar(255) NOT NULL, `phone_number` varchar(255) NOT NULL, `credit_limit` decimal(63,2) NOT NULL, `last_bill_end_date` datetime NOT NULL, `balance` decimal(63,2) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (3.3ms)[0m   [0;1mCREATE TABLE `dvds` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255) NOT NULL, `year` int(11) NOT NULL, `copies` int(11) NOT NULL, `is_new` tinyint(1) NOT NULL, `is_discontinued` tinyint(1) NOT NULL, `list_price` decimal(63,2) NOT NULL, `sale_price` decimal(63,2) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (2.8ms)[0m   [0mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.6ms)[0m   [0;1mCREATE TABLE `genres` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (2.8ms)[0m   [0mCREATE TABLE `appeared_in` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.6ms)[0m   [0;1mCREATE TABLE `directed` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (2.5ms)[0m   [0mCREATE TABLE `produced` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;36;1mSQL (3.4ms)[0m   [0;1mCREATE TABLE `in_genre` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `genre_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20090503234102')[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (12.0ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (6.6ms)[0m   [0mSHOW FIELDS FROM `appeared_in`[0m
+  [4;36;1mSQL (3.9ms)[0m   [0;1mdescribe `appeared_in`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mSHOW KEYS FROM `appeared_in`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mSHOW FIELDS FROM `artists`[0m
+  [4;35;1mSQL (7.6ms)[0m   [0mdescribe `artists`[0m
+  [4;36;1mSQL (2.3ms)[0m   [0;1mSHOW KEYS FROM `artists`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mSHOW FIELDS FROM `customers`[0m
+  [4;36;1mSQL (11.4ms)[0m   [0;1mdescribe `customers`[0m
+  [4;35;1mSQL (2.2ms)[0m   [0mSHOW KEYS FROM `customers`[0m
+  [4;36;1mSQL (9.0ms)[0m   [0;1mSHOW FIELDS FROM `directed`[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mdescribe `directed`[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSHOW KEYS FROM `directed`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `dvds`[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mdescribe `dvds`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW KEYS FROM `dvds`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW FIELDS FROM `genres`[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mdescribe `genres`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW KEYS FROM `genres`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSHOW FIELDS FROM `in_genre`[0m
+  [4;36;1mSQL (2.2ms)[0m   [0;1mdescribe `in_genre`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `in_genre`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW FIELDS FROM `produced`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mdescribe `produced`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW KEYS FROM `produced`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `rental_plans`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mdescribe `rental_plans`[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mSHOW KEYS FROM `rental_plans`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+  [4;36;1mSQL (99.7ms)[0m   [0;1mDROP TABLE `in_genre`[0m
+  [4;35;1mSQL (2.2ms)[0m   [0mDROP TABLE `produced`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mDROP TABLE `directed`[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mDROP TABLE `appeared_in`[0m
+  [4;36;1mSQL (2.8ms)[0m   [0;1mDROP TABLE `genres`[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mDROP TABLE `dvds`[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mDROP TABLE `customers`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mDROP TABLE `rental_plans`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mDELETE FROM schema_migrations WHERE version = '20090503234102'[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+  [4;36;1mSQL (3.0ms)[0m   [0;1mCREATE TABLE `rental_plans` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `rate` decimal(63,2) NOT NULL, `billing_cycle_length` int(11) NOT NULL, `max_rented_out` int(11) NOT NULL, `dvds_per_month` int(11) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (3.2ms)[0m   [0mCREATE TABLE `customers` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `date_subscribed` datetime NOT NULL, `rental_plan_id` int(11), `name` varchar(255) NOT NULL, `address` varchar(255) NOT NULL, `phone_number` varchar(255) NOT NULL, `credit_limit` decimal(63,2) NOT NULL, `last_bill_end_date` datetime NOT NULL, `balance` decimal(63,2) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.9ms)[0m   [0;1mCREATE TABLE `dvds` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255) NOT NULL, `year` int(11) NOT NULL, `copies` int(11) NOT NULL, `is_new` tinyint(1) NOT NULL, `is_discontinued` tinyint(1) NOT NULL, `list_price` decimal(63,2) NOT NULL, `sale_price` decimal(63,2) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (3.3ms)[0m   [0mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.6ms)[0m   [0;1mCREATE TABLE `genres` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (3.1ms)[0m   [0mCREATE TABLE `appeared_in` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;36;1mSQL (3.0ms)[0m   [0;1mCREATE TABLE `directed` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (3.1ms)[0m   [0mCREATE TABLE `produced` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.5ms)[0m   [0;1mCREATE TABLE `in_genre` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `genre_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20090503234102')[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSHOW FIELDS FROM `appeared_in`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mdescribe `appeared_in`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `appeared_in`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `artists`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mdescribe `artists`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW KEYS FROM `artists`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mSHOW FIELDS FROM `customers`[0m
+  [4;36;1mSQL (19.2ms)[0m   [0;1mdescribe `customers`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW KEYS FROM `customers`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mSHOW FIELDS FROM `directed`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mdescribe `directed`[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSHOW KEYS FROM `directed`[0m
+  [4;35;1mSQL (4.3ms)[0m   [0mSHOW FIELDS FROM `dvds`[0m
+  [4;36;1mSQL (2.6ms)[0m   [0;1mdescribe `dvds`[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mSHOW KEYS FROM `dvds`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW FIELDS FROM `genres`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mdescribe `genres`[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSHOW KEYS FROM `genres`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW FIELDS FROM `in_genre`[0m
+  [4;36;1mSQL (2.3ms)[0m   [0;1mdescribe `in_genre`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `in_genre`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW FIELDS FROM `produced`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mdescribe `produced`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW KEYS FROM `produced`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSHOW FIELDS FROM `rental_plans`[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mdescribe `rental_plans`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW KEYS FROM `rental_plans`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+  [4;36;1mSQL (2.6ms)[0m   [0;1mDROP TABLE `in_genre`[0m
+  [4;35;1mSQL (2.8ms)[0m   [0mDROP TABLE `produced`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mDROP TABLE `directed`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mDROP TABLE `appeared_in`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mDROP TABLE `genres`[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mDROP TABLE `dvds`[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mDROP TABLE `customers`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mDROP TABLE `rental_plans`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mDELETE FROM schema_migrations WHERE version = '20090503234102'[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+  [4;36;1mSQL (2.4ms)[0m   [0;1mCREATE TABLE `rental_plans` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `rate` decimal(63,2) NOT NULL, `billing_cycle_length` int(11) NOT NULL, `max_rented_out` int(11) NOT NULL, `dvds_per_month` int(11) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (2.3ms)[0m   [0mCREATE TABLE `customers` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `date_subscribed` datetime NOT NULL, `rental_plan_id` int(11), `name` varchar(255) NOT NULL, `address` varchar(255) NOT NULL, `phone_number` varchar(255) NOT NULL, `credit_limit` decimal(63,2) NOT NULL, `last_bill_end_date` datetime NOT NULL, `balance` decimal(63,2) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.3ms)[0m   [0;1mCREATE TABLE `dvds` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255) NOT NULL, `year` int(11) NOT NULL, `copies` int(11) NOT NULL, `is_new` tinyint(1) NOT NULL, `is_discontinued` tinyint(1) NOT NULL, `list_price` decimal(63,2) NOT NULL, `sale_price` decimal(63,2) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (2.4ms)[0m   [0mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.8ms)[0m   [0;1mCREATE TABLE `genres` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (2.5ms)[0m   [0mCREATE TABLE `appeared_in` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.9ms)[0m   [0;1mCREATE TABLE `directed` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (2.4ms)[0m   [0mCREATE TABLE `produced` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.7ms)[0m   [0;1mCREATE TABLE `in_genre` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `genre_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (29.9ms)[0m   [0mCREATE TABLE `purchases` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `customer_id` int(11), `dvd_id` int(11), `sale_price` decimal(63,2) NOT NULL, `date_purchased` datetime NOT NULL, `date_shipped` datetime, `date_returned` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (3.5ms)[0m   [0;1mCREATE TABLE `rentals` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `customer_id` int(11), `dvd_id` int(11), `date_rented` datetime NOT NULL, `date_shipped` datetime, `date_returned` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (19.7ms)[0m   [0mCREATE TABLE `payments` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `customer_id` int(11), `date_paid` datetime NOT NULL, `amount` decimal(63,2) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20090503234102')[0m
+  [4;35;1mSQL (3.4ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mSHOW FIELDS FROM `appeared_in`[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mdescribe `appeared_in`[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSHOW KEYS FROM `appeared_in`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mdescribe `artists`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `artists`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mSHOW FIELDS FROM `customers`[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mdescribe `customers`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW KEYS FROM `customers`[0m
+  [4;35;1mSQL (5.0ms)[0m   [0mSHOW FIELDS FROM `directed`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mdescribe `directed`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW KEYS FROM `directed`[0m
+  [4;36;1mSQL (2.2ms)[0m   [0;1mSHOW FIELDS FROM `dvds`[0m
+  [4;35;1mSQL (2.7ms)[0m   [0mdescribe `dvds`[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW KEYS FROM `dvds`[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mSHOW FIELDS FROM `genres`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mdescribe `genres`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSHOW KEYS FROM `genres`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW FIELDS FROM `in_genre`[0m
+  [4;35;1mSQL (2.7ms)[0m   [0mdescribe `in_genre`[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSHOW KEYS FROM `in_genre`[0m
+  [4;35;1mSQL (2.2ms)[0m   [0mSHOW FIELDS FROM `payments`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mdescribe `payments`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW KEYS FROM `payments`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `produced`[0m
+  [4;35;1mSQL (3.9ms)[0m   [0mdescribe `produced`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW KEYS FROM `produced`[0m
+  [4;35;1mSQL (3.4ms)[0m   [0mSHOW FIELDS FROM `purchases`[0m
+  [4;36;1mSQL (3.1ms)[0m   [0;1mdescribe `purchases`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW KEYS FROM `purchases`[0m
+  [4;36;1mSQL (5.5ms)[0m   [0;1mSHOW FIELDS FROM `rental_plans`[0m
+  [4;35;1mSQL (2.6ms)[0m   [0mdescribe `rental_plans`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW KEYS FROM `rental_plans`[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mSHOW FIELDS FROM `rentals`[0m
+  [4;36;1mSQL (2.3ms)[0m   [0;1mdescribe `rentals`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW KEYS FROM `rentals`[0m
+  [4;36;1mSQL (65.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (13.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (146.8ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+  [4;36;1mSQL (216.3ms)[0m   [0;1mDROP TABLE `payments`[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mDROP TABLE `rentals`[0m
+  [4;36;1mSQL (2.5ms)[0m   [0;1mDROP TABLE `purchases`[0m
+  [4;35;1mSQL (15.6ms)[0m   [0mDROP TABLE `in_genre`[0m
+  [4;36;1mSQL (2.3ms)[0m   [0;1mDROP TABLE `produced`[0m
+  [4;35;1mSQL (31.2ms)[0m   [0mDROP TABLE `directed`[0m
+  [4;36;1mSQL (2.9ms)[0m   [0;1mDROP TABLE `appeared_in`[0m
+  [4;35;1mSQL (4.9ms)[0m   [0mDROP TABLE `genres`[0m
+  [4;36;1mSQL (3.0ms)[0m   [0;1mDROP TABLE `artists`[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mDROP TABLE `dvds`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mDROP TABLE `customers`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mDROP TABLE `rental_plans`[0m
+  [4;36;1mSQL (35.7ms)[0m   [0;1mDELETE FROM schema_migrations WHERE version = '20090503234102'[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+  [4;36;1mSQL (66.6ms)[0m   [0;1mCREATE TABLE `rental_plans` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `rate` decimal(63,2) NOT NULL, `billing_cycle_length` int(11) NOT NULL, `max_rented_out` int(11) NOT NULL, `dvds_per_month` int(11)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (2.6ms)[0m   [0mCREATE TABLE `customers` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `date_subscribed` datetime NOT NULL, `rental_plan_id` int(11), `name` varchar(255) NOT NULL, `address` varchar(255) NOT NULL, `phone_number` varchar(255) NOT NULL, `credit_limit` decimal(63,2) NOT NULL, `last_bill_end_date` datetime NOT NULL, `balance` decimal(63,2) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (7.6ms)[0m   [0;1mCREATE TABLE `dvds` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255) NOT NULL, `year` int(11) NOT NULL, `copies` int(11) NOT NULL, `is_new` tinyint(1) NOT NULL, `is_discontinued` tinyint(1) NOT NULL, `list_price` decimal(63,2) NOT NULL, `sale_price` decimal(63,2) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.3ms)[0m   [0;1mCREATE TABLE `genres` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mCREATE TABLE `appeared_in` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mCREATE TABLE `directed` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mCREATE TABLE `produced` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `artist_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mCREATE TABLE `dvd_genre` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `genre_id` int(11), `dvd_id` int(11)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mCREATE TABLE `purchases` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `customer_id` int(11), `dvd_id` int(11), `sale_price` decimal(63,2) NOT NULL, `date_purchased` datetime NOT NULL, `date_shipped` datetime, `date_returned` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.4ms)[0m   [0;1mCREATE TABLE `rentals` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `customer_id` int(11), `dvd_id` int(11), `date_rented` datetime NOT NULL, `date_shipped` datetime, `date_returned` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mCREATE TABLE `payments` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `customer_id` int(11), `date_paid` datetime NOT NULL, `amount` decimal(63,2) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (5.3ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20090503234102')[0m
+  [4;35;1mSQL (3.2ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (70.4ms)[0m   [0;1mSHOW FIELDS FROM `appeared_in`[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mdescribe `appeared_in`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW KEYS FROM `appeared_in`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (2.7ms)[0m   [0;1mdescribe `artists`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `artists`[0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mSHOW FIELDS FROM `customers`[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mdescribe `customers`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW KEYS FROM `customers`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `directed`[0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mdescribe `directed`[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mSHOW KEYS FROM `directed`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW FIELDS FROM `dvd_genre`[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mdescribe `dvd_genre`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW KEYS FROM `dvd_genre`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mSHOW FIELDS FROM `dvds`[0m
+  [4;36;1mSQL (2.7ms)[0m   [0;1mdescribe `dvds`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW KEYS FROM `dvds`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `genres`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mdescribe `genres`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW KEYS FROM `genres`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `payments`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mdescribe `payments`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSHOW KEYS FROM `payments`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mSHOW FIELDS FROM `produced`[0m
+  [4;35;1mSQL (2.6ms)[0m   [0mdescribe `produced`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW KEYS FROM `produced`[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mSHOW FIELDS FROM `purchases`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mdescribe `purchases`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW KEYS FROM `purchases`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mSHOW FIELDS FROM `rental_plans`[0m
+  [4;35;1mSQL (2.2ms)[0m   [0mdescribe `rental_plans`[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mSHOW KEYS FROM `rental_plans`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mSHOW FIELDS FROM `rentals`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mdescribe `rentals`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW KEYS FROM `rentals`[0m

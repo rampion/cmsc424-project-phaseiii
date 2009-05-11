@@ -1,6 +1,9 @@
 class RentalPlan < ActiveRecord::Base
   has_many :customers
   validate do |plan|
+    unless plan.rate >= 0
+      errors.add_to_base("Rate must be greater or equal to $0 per billing cycle")
+    end
     unless plan.billing_cycle_length > 0
       errors.add_to_base("Billing cycle length must be a positive number of months")
     end

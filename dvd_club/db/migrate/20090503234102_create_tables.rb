@@ -44,7 +44,7 @@ class CreateTables < ActiveRecord::Migration
       t.references :artist
       t.references :dvd
     end
-    create_table :in_genre do |t|
+    create_table :dvd_genre do |t|
       t.references :genre
       t.references :dvd
     end
