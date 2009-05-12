@@ -15,10 +15,10 @@ Sequence of commands thus far:
   % vim db/migrate/20090503234102_create_tables.rb # create the tables
   % rake db:migrate # create the tables defined in last migration
   % vim app/model/... # add constraints and app-specific methods to models
+  % script/generate migration default_plans # create the three default rental plans
+  % rake db:migrate # add the default plans
   # and if I change my mind
   % rake db:rollback # undo previous migration
-  # todo
-  % script/generate migration default_plans # create the three default rental plans
 
 Added table constraints, and join statements
 

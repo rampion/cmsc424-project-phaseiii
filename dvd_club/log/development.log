@@ -305,3 +305,169 @@ Migrating to CreateTables (20090503234102)
   [4;35;1mSQL (1.5ms)[0m   [0mSHOW FIELDS FROM `rentals`[0m
   [4;36;1mSQL (1.9ms)[0m   [0;1mdescribe `rentals`[0m
   [4;35;1mSQL (1.2ms)[0m   [0mSHOW KEYS FROM `rentals`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+Migrating to DefaultPlans (20090512000553)
+  [4;36;1mRentalPlan Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `rental_plans`[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mBEGIN[0m
+  [4;36;1mRentalPlan Create (67.5ms)[0m   [0;1mINSERT INTO `rental_plans` (`billing_cycle_length`, `rate`, `dvds_per_month`, `max_rented_out`) VALUES(1, 3.99, 2, 1)[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mRentalPlan Create (0.1ms)[0m   [0mINSERT INTO `rental_plans` (`billing_cycle_length`, `rate`, `dvds_per_month`, `max_rented_out`) VALUES(1, 19.95, NULL, 3)[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mRentalPlan Create (0.1ms)[0m   [0;1mINSERT INTO `rental_plans` (`billing_cycle_length`, `rate`, `dvds_per_month`, `max_rented_out`) VALUES(12, 119.7, NULL, 3)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20090512000553')[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `appeared_in`[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mdescribe `appeared_in`[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSHOW KEYS FROM `appeared_in`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mdescribe `artists`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mSHOW KEYS FROM `artists`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mSHOW FIELDS FROM `customers`[0m
+  [4;35;1mSQL (23.2ms)[0m   [0mdescribe `customers`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mSHOW KEYS FROM `customers`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW FIELDS FROM `directed`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mdescribe `directed`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `directed`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `dvd_genre`[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mdescribe `dvd_genre`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `dvd_genre`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mSHOW FIELDS FROM `dvds`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mdescribe `dvds`[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mSHOW KEYS FROM `dvds`[0m
+  [4;36;1mSQL (2.6ms)[0m   [0;1mSHOW FIELDS FROM `genres`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mdescribe `genres`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW KEYS FROM `genres`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW FIELDS FROM `payments`[0m
+  [4;36;1mSQL (2.2ms)[0m   [0;1mdescribe `payments`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW KEYS FROM `payments`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW FIELDS FROM `produced`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mdescribe `produced`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW KEYS FROM `produced`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW FIELDS FROM `purchases`[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mdescribe `purchases`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW KEYS FROM `purchases`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `rental_plans`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mdescribe `rental_plans`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW KEYS FROM `rental_plans`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mSHOW FIELDS FROM `rentals`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mdescribe `rentals`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mSHOW KEYS FROM `rentals`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mRentalPlan Columns (2.7ms)[0m   [0mSHOW FIELDS FROM `rental_plans`[0m
+  [4;36;1mRentalPlan Load (2.2ms)[0m   [0;1mSELECT * FROM `rental_plans` [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to DefaultPlans (20090512000553)
+  [4;36;1mRentalPlan Delete all (0.9ms)[0m   [0;1mDELETE FROM `rental_plans` [0m
+  [4;35;1mSQL (1.0ms)[0m   [0mDELETE FROM schema_migrations WHERE version = '20090512000553'[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mSHOW FIELDS FROM `appeared_in`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mdescribe `appeared_in`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW KEYS FROM `appeared_in`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `artists`[0m
+  [4;35;1mSQL (6.6ms)[0m   [0mdescribe `artists`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `artists`[0m
+  [4;35;1mSQL (5.3ms)[0m   [0mSHOW FIELDS FROM `customers`[0m
+  [4;36;1mSQL (12.1ms)[0m   [0;1mdescribe `customers`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW KEYS FROM `customers`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW FIELDS FROM `directed`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mdescribe `directed`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `directed`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW FIELDS FROM `dvd_genre`[0m
+  [4;36;1mSQL (3.1ms)[0m   [0;1mdescribe `dvd_genre`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSHOW KEYS FROM `dvd_genre`[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mSHOW FIELDS FROM `dvds`[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mdescribe `dvds`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `dvds`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mSHOW FIELDS FROM `genres`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mdescribe `genres`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW KEYS FROM `genres`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mSHOW FIELDS FROM `payments`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mdescribe `payments`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW KEYS FROM `payments`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW FIELDS FROM `produced`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mdescribe `produced`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW KEYS FROM `produced`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mSHOW FIELDS FROM `purchases`[0m
+  [4;35;1mSQL (3.0ms)[0m   [0mdescribe `purchases`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `purchases`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `rental_plans`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mdescribe `rental_plans`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `rental_plans`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `rentals`[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mdescribe `rentals`[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW KEYS FROM `rentals`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateTables (20090503234102)
+Migrating to DefaultPlans (20090512000553)
+  [4;36;1mRentalPlan Columns (3.4ms)[0m   [0;1mSHOW FIELDS FROM `rental_plans`[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mRentalPlan Create (0.2ms)[0m   [0;1mINSERT INTO `rental_plans` (`billing_cycle_length`, `rate`, `dvds_per_month`, `max_rented_out`) VALUES(1, 3.99, 2, 1)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mRentalPlan Create (0.1ms)[0m   [0mINSERT INTO `rental_plans` (`billing_cycle_length`, `rate`, `dvds_per_month`, `max_rented_out`) VALUES(1, 19.95, NULL, 3)[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mRentalPlan Create (0.1ms)[0m   [0;1mINSERT INTO `rental_plans` (`billing_cycle_length`, `rate`, `dvds_per_month`, `max_rented_out`) VALUES(12, 119.7, NULL, 3)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20090512000553')[0m
+  [4;35;1mSQL (6.4ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (8.9ms)[0m   [0;1mSHOW FIELDS FROM `appeared_in`[0m
+  [4;35;1mSQL (9.0ms)[0m   [0mdescribe `appeared_in`[0m
+  [4;36;1mSQL (2.7ms)[0m   [0;1mSHOW KEYS FROM `appeared_in`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mdescribe `artists`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `artists`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `customers`[0m
+  [4;35;1mSQL (2.5ms)[0m   [0mdescribe `customers`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW KEYS FROM `customers`[0m
+  [4;35;1mSQL (3.2ms)[0m   [0mSHOW FIELDS FROM `directed`[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mdescribe `directed`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `directed`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW FIELDS FROM `dvd_genre`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mdescribe `dvd_genre`[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSHOW KEYS FROM `dvd_genre`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW FIELDS FROM `dvds`[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mdescribe `dvds`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW KEYS FROM `dvds`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW FIELDS FROM `genres`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mdescribe `genres`[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSHOW KEYS FROM `genres`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSHOW FIELDS FROM `payments`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mdescribe `payments`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `payments`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW FIELDS FROM `produced`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mdescribe `produced`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW KEYS FROM `produced`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW FIELDS FROM `purchases`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mdescribe `purchases`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSHOW KEYS FROM `purchases`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW FIELDS FROM `rental_plans`[0m
+  [4;35;1mSQL (2.3ms)[0m   [0mdescribe `rental_plans`[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSHOW KEYS FROM `rental_plans`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSHOW FIELDS FROM `rentals`[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mdescribe `rentals`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW KEYS FROM `rentals`[0m
+  [4;35;1mRentalPlan Load (0.2ms)[0m   [0mSELECT * FROM `rental_plans` [0m
