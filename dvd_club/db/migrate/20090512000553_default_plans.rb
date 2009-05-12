@@ -11,6 +11,10 @@ class DefaultPlans < ActiveRecord::Migration
   end
 
   def self.down
+    Purchase.delete_all
+    Rental.delete_all
+    Payment.delete_all
+    Customer.delete_all
     RentalPlan.delete_all
   end
 end

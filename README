@@ -10,13 +10,18 @@ MySQL installed by
 Sequence of commands thus far:
   % rails -d mysql dvd_club # create project
   % cd dvd_club
-  % rake db:create # create the mysql database
+  # create the mysql database
+  % rake db:create 
+  # create the tables
   % script/generate migration create_tables 
-  % vim db/migrate/20090503234102_create_tables.rb # create the tables
-  % rake db:migrate # create the tables defined in last migration
-  % vim app/model/... # add constraints and app-specific methods to models
-  % script/generate migration default_plans # create the three default rental plans
+  % vim db/migrate/20090503234102_create_tables.rb 
+  % rake db:migrate 
+  # add constraints and app-specific methods to models
+  % vim app/models/{rental_plan,customer,purchase,rental,dvd,artist,genre}.rb
+  # create the three default rental plans
+  % script/generate migration default_plans 
   % rake db:migrate # add the default plans
+  % script/generate controller admin # create 
   # and if I change my mind
   % rake db:rollback # undo previous migration
 
