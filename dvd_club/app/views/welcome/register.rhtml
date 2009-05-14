@@ -1,0 +1,15 @@
+So you want to register, eh?
+<% form_for :customer, @customer do |f| %>
+  <% if flash[:notice] %>
+    <%= h flash[:notice] %>
+  <% end %>
+  <%= error_messages_for :customer %>
+  <ul>
+    <li>What's your name? <%= f.text_field :name%></li>
+    <li>What's your address? <%= f.text_field :address%></li>
+    <li>What's your phone number? <%= f.text_field :phone_number%></li>
+    <li>What's your credit limit? <%= f.text_field :credit_limit%></li>
+    <li>Which plan do you want?  <%= f.select('plan_id', @plans) %></li>
+  </ul>
+  <%= submit_tag "Login" %>
+<% end %>

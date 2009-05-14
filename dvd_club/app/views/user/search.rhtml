@@ -1,0 +1,36 @@
+<% if flash[:notice] %>
+  <div><%= h flash[:notice] %></div>
+<% end %>
+<%= @dvds.size %> DVDs found <br/>
+<ul>
+  <% @dvds.each do |dvd| %>
+    <li><u><%= h dvd.title %> (<%= dvd.year %>)</u> 
+    <% form_tag "/user/rent/#{dvd.id}" do %><%= submit_tag 'Rent' %><% end %>
+    <% form_tag "/user/add_to_cart/#{dvd.id}" do %><%= submit_tag 'Add to Cart' %><% end %>
+    <dl>
+      <dt>ID</dt>
+      <dd><%= dvd.id %></dd>
+      <dt>Price</dt>
+      <dd>$<%= '%.2f' % dvd.sale_price %></dd>
+      <dt>Copies</dt>
+      <dd><%= dvd.copies %></dd>
+      <dt>Featuring</dt>
+      <% dvd.stars.each do |star| %>
+        <dd><%= h star.name %></dd>
+      <% end %>
+      <dt>Directors</dt>
+      <% dvd.directors.each do |director| %>
+        <dd><%= h director.name %></dd>
+      <% end %>
+      <dt>Producers</dt>
+      <% dvd.producers.each do |producer| %>
+        <dd><%= h producer.name %></dd>
+      <% end %>
+      <dt>Genres</dt>
+      <% dvd.genres.each do |genre| %>
+        <dd><%= h genre.name %></dd>
+      <% end %>
+    </dl>
+    </li>
+  <% end %>
+</ul>

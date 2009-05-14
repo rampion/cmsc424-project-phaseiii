@@ -76,7 +76,7 @@ namespace :admin do
     begin 
       customer = Customer.find(customer_id.to_i)
       customer.payments << Payment.create(:date_paid => Date.today, :amount => amount.to_f)
-      customer.balance += amount.to_f
+      customer.balance -= amount.to_f
       customer.save
     rescue ActiveRecord::RecordNotFound
       STDERR.puts "Unable to find customer #{customer_id}"

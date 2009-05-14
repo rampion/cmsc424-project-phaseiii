@@ -19,4 +19,15 @@ class Customer < ActiveRecord::Base
   def overdrawn?
     self.balance >= self.credit_limit
   end
+  def over_monthly_limit?
+    return false if self.rental_plan.dvds_per_month.nil?
+    today = Date.today
+    month = today - today.mday.days + 1
+    rentals_this_month = self.rentals.find(:all, :conditions => ['date_returned >= ? OR date_rented >= ?', month, month])
+    return rentals_this_month.size >= self.rental_plan.dvds_per_month
+  end
+  def over_concurrent_limit?
+    still_out = self.rentals.find(:all, :conditions => 'date_returned IS NULL')
+    return still_out.size >= self.rental_plan.max_rented_out
+  end
 end

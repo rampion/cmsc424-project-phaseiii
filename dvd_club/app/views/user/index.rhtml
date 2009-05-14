@@ -1,0 +1,47 @@
+
+<% if flash[:notice] %>
+  <div><%= h flash[:notice] %></div>
+<% end %>
+
+<div class="box">
+Hi <%= @customer.name %>!
+<ul>
+  <li>Your balance is $<%= '%.2f' % @customer.balance %>
+  <li>Your credit limit is $<%= '%.2f' % @customer.credit_limit %>
+  <li>
+  <% form_tag '/user/drop' do %>
+    <%= submit_tag 'Delete Account' %>
+  <% end %>
+  </li>
+</u>
+</div>
+
+<div class="box">
+  <h3> DVD Search </h3>
+  Enter as many points of data as you wish.
+  <% form_for :search, :url => { :action => 'search' } do |f| %>
+    <ul>
+      <li> Title: <%= f.text_field :title %>
+      <li> Year range: <%= f.text_field :year_range %>
+      <li> Featuring: <%= f.text_field :featuring %>
+      <li> Director: <%= f.text_field :director %>
+      <li> Producer: <%= f.text_field :producer %>
+      <li> Genre: <%= f.text_field :genre %>
+      <li> Price range: <%= f.text_field :price_range %>
+      <li> Exclude previous rentals? <%= f.check_box :exclude_rentals %>
+      <li> Exclude previous purchases? <%= f.check_box :exclude_purchases %>
+    </ul>
+      <%= submit_tag 'Search' %>
+  <% end %>
+</div>
+<div class='box'>
+  <h3>Shopping Cart</h3>
+  <% form_for :checkout, :url => { :action => :checkout }  do |f| %>
+  <ul>
+    <% @dvds.each do |dvd| %>
+      <li> <%= h dvd.title %> (<%= dvd.year %>) <%= f.text_field "#{dvd.id}", :size => 3, :value => 1 %></li>
+    <% end %>
+  </ul>
+    <%= submit_tag 'Checkout' %>
+  <% end %>
+</div>
