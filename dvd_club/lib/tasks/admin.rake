@@ -1,34 +1,136 @@
 namespace :admin do
   desc "Ship DVDs; ship all rentals and purchases"
   task(:ship_dvds => :environment) do
-    Purchase.update( Purchase.find(:all, :conditions => { :date_shipped => nil }), { :date_shipped => Date.today } )
-    Rental.update( Rental.find(:all, :conditions => { :date_shipped => nil }), { :date_shipped => Date.today } )
+    unshipped_purchases = Purchase.find(:all, :conditions => { :date_shipped => nil }) 
+    Purchase.update( unshipped_purchases, Array.new(unshipped_purchases.size, { :date_shipped => Date.today } ))
+    unshipped_rentals = Rental.find(:all, :conditions => { :date_shipped => nil })
+    Rental.update( unshipped_rentals , Array.new(unshipped_rentals.size, { :date_shipped => Date.today } ))
   end
   desc "Drop DVD; mark a given DVD as no longer available (use TITLE=<dvd title> YEAR=<dvd year>)"
   task(:drop_dvd => :environment) do 
     unless title = ENV['TITLE']
-      puts "TITLE environment variable must be set"
+      STDERR.puts "TITLE environment variable must be set"
       break
     end
     unless year = ENV['YEAR']
-      puts "YEAR environment variable must be set"
+      STDERR.puts "YEAR environment variable must be set"
       break
     end
-    Dvd.update(14, { :is_discontinued => true } )
-=begin
     dvds = Dvd.find(:all, :conditions => { :title => title, :year => year.to_i } )
     if dvds.empty?
-      puts "Unable to find #{title} (#{year})"
+      STDERR.puts "Unable to find #{title} (#{year})"
       break
     end
-    dvds.each do |dvd|
-      dvd.is_discontinued = true
-      dvd.save
+    Dvd.update( dvds, Array.new(dvds.size, {:is_discontinued => true}) )
+  end
+  desc "Mark a rental DVD as returned (use RENTAL_ID=<rental-id>)"
+  task(:return_rental => :environment) do
+    unless rental_id = ENV['RENTAL_ID']
+      STDERR.puts "RENTAL_ID environment variable must be set"
+      break
     end
-=end
+    begin
+      rental = Rental.update(rental_id.to_i, { :date_returned => Date.today })
+      rental.dvd.copies += 1
+      rental.save
+    rescue ActiveRecord::RecordNotFound
+      STDERR.puts "Unable to find rental #{rental_id}"
+      break
+    end
+  end
+  desc "Mark a purchased DVD as returned if it's within the 90 day window (use PURCHASE_ID=<purchase-id>)"
+  task(:return_purchase => :environment) do
+    unless purchase_id = ENV['PURCHASE_ID']
+      STDERR.puts "PURCHASE_ID environment variable must be set"
+      break
+    end
+    begin
+      purchase = Purchase.find(purchase_id.to_i)
+      if purchase.date_shipped + 90.days < Date.today
+        STDERR.puts "Cannot return - past 90 day mark"
+        break
+      end
+      purchase.date_returned = Date.today
+      purchase.dvd.copies += 1
+      purchase.customer.balance -= purchase.sale_price
+      purchase.save
+    rescue ActiveRecord::RecordNotFound
+      STDERR.puts "Unable to find purchase #{purchase_id}"
+      break
+    end
+  end
+  desc "Receive a payment from a customer (use CUSTOMER_ID=<customer-id> and AMOUNT=<amount>)"
+  task(:receive_payment => :environment) do
+    unless customer_id = ENV['CUSTOMER_ID'] 
+      STDERR.puts "CUSTOMER_ID environment variable must be set"
+      break
+    end
+    unless amount = ENV['AMOUNT']
+      STDERR.puts "AMOUNT environment variable must be set"
+      break
+    end
+    unless amount.to_f >= 0
+      STDERR.puts "AMOUNT must be >= 0"
+      break
+    end
+    begin 
+      customer = Customer.find(customer_id.to_i)
+      customer.payments << Payment.create(:date_paid => Date.today, :amount => amount.to_f)
+      customer.balance += amount.to_f
+      customer.save
+    rescue ActiveRecord::RecordNotFound
+      STDERR.puts "Unable to find customer #{customer_id}"
+      break
+    end
   end
   desc "Generate bills for all members with outstanding balances  (printed to screen)"
   task(:generate_bills => :environment) do
+    now = Date.today
+    Customer.find(:all, :conditions => 'balance > 0').each do |customer|
+      prior_balance = customer.balance
+      purchases = Purchase.find(:all, :conditions => [ "date_purchased > ?", customer.last_bill_end_date ] )
+      returns = Purchase.find(:all, :conditions => [ "date_returned > ?", customer.last_bill_end_date ] )
+      payments = Payment.find(:all, :conditions => [ "date_paid > ?", customer.last_bill_end_date ] )
+      prior_balance -= purchases.inject(0.0) { |sum,purchase| sum + purchase.sale_price }
+      prior_balance += returns.inject(0.0) { |sum,a_return| sum + a_return.sale_price }
+
+      puts "ID: #{customer.id}"
+      puts customer.name
+      puts "Prior Bill Date: #{customer.last_bill_end_date}"
+      puts "Prior Balance: $%.2f" % prior_balance
+
+      items = purchases.map { |a_purchase|  [a_purchase.date_purchased, :purchase, a_purchase] } +
+              returns.map { |a_return|      [a_return.date_returned, :return, a_return] } +
+              payments.map { |a_payment|    [a_payment.date_paid, :payment, a_payment] }
+
+      date = customer.date_subscribed + customer.plan.billing_cycle_length
+      while (date <= now)
+        items << [date, :dues, nil ] if (customer.last_bill_end_date < date)
+        date += customer.plan.billing_cycle_length
+      end
+
+      items.sort do |date,type,item|
+        print "#{date}\t#{type}\t"
+        case type
+        when :dues
+          puts "\t\t+$%.2f" % customer.plan.rate
+          customer.balance += customer.plan.rate
+        when :payment 
+          puts "\t\t-$%.2f" % item.amount
+        when :purchase
+          puts "#{item.dvd.title} #{item.dvd.year}\t+$#{ "%.2f" % item.sale_price }"
+        when :return
+          puts "#{item.dvd.title} #{item.dvd.year}\t-$#{ "%.2f" % item.sale_price }"
+        end
+      end
+
+      puts "Bill Date: #{now}"
+      puts "Balance: %.2f" % customer.balance
+
+      customer.last_bill_end_date = now
+      customer.save
+      puts "-"*78
+    end
   end
   desc "Generate unpopularity report (use LIMIT=<count> START=<start date> END=<end date>, OVERLAP=<overlap>), "+
        "apply discount, and print to screen"
@@ -126,21 +228,21 @@ namespace :admin do
   end
   desc "Age off new DVDs; remove their sale price"
   task(:age_off_new_dvd => :environment) do
-    puts "Removing 'new' status from DVDs"
+    STDERR.puts "Removing 'new' status from DVDs"
     Dvd.find(:all, :conditions => { :is_new => true }).each do |dvd|
       dvd.is_new = false
       dvd.sale_price = dvd.list_price
       dvd.save
-      print "."
-      STDOUT.flush
+      STDERR.print "."
+      STDERR.flush
     end
-    puts
-    puts "done"
+    STDERR.puts
+    STDERR.puts "done"
   end
   desc "Loads new DVDs from given YAML file; give them the sale price for new DVDs (use INPUT=<filename>)"
   task(:add_new_dvd => :environment)  do 
     records = YAML::load(File.read(ENV['INPUT']))
-    puts "Adding DVDs"
+    STDERR.puts "Adding DVDs"
     records.each do |record|
       dvd = Dvd.create( 
         :title => record[:title], 
@@ -173,10 +275,10 @@ namespace :admin do
         dvd.genres << genre
       end
       dvd.save
-      print "."
-      STDOUT.flush
+      STDERR.print "."
+      STDERR.flush
     end
-    puts
-    puts "#{records.size} new DVDs added"
+    STDERR.puts
+    STDERR.puts "#{records.size} new DVDs added"
   end
 end

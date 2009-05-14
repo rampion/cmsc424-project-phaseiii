@@ -11,8 +11,12 @@ class Customer < ActiveRecord::Base
     unless customer.credit_limit >= 0
       errors.add_to_base("Customer must have non-negative credit limit")
     end
-    unless customer.credit_limit >= customer.balance
-      errors.add_to_base("Customer balance must not exceed credit limit")
-    end
+    # don't let an overdrawn customer rent or purchase
+    #unless customer.credit_limit >= customer.balance
+      #errors.add_to_base("Customer balance must not exceed credit limit")
+    #end
+  end
+  def overdrawn?
+    self.balance >= self.credit_limit
   end
 end

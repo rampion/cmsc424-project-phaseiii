@@ -1,5 +1,7 @@
 Repository for rails implementation of phase III of the CMSC424 class project.
 
+Note: Data provided by IMDB for individual personal use only, 
+
 MySQL installed by
   downloading mysql-5.0.77-osx10.5-x86.dmg
   - from http://mysql.mirrors.pair.com/Downloads/MySQL-5.0/
@@ -36,39 +38,34 @@ Sequence of commands thus far:
   
   # admin commands 
   % rake --help | grep 'admin:'
+  #   - add dvds
+  #   - generate unpopularity report
+  #   - ship dvds
+  #   - generate bills
+  #   - drop dvds
+  #   - receive returns
+  #   - recieve payments
 
   # TODO
   # open question: 
   #   - user w/ negative balance closes?
   #     - should add inactive column?
   #     - just do it
-  # rake tasks to do administrative tasks
-  #   - add dvds
-  #   - generate unpopularity report
-  #   - ship dvds
-  #   - generate bills
-  #   - drop dvds
   # create a controller to handle welcome tasks
   #   - login (existing user)
   #   - register (new user)
-  #   - admin login
   % script/generate controller welcome
   # create a controller to handle the user tasks
   #   - drop membership
   #   - dvd query
   #     - purchase (add to cart, n copies)/ return
   #     - rent / return
-  #   - make payment
-  #   - show monthly bill
-  #   - show announcements
   % script/generate controller user
 
 Added table constraints, and join statements
 
 TODO:
   add tests
-  get data
   add controllers
-    admin
     user
   add views
