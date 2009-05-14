@@ -21,17 +21,33 @@ Sequence of commands thus far:
   # create the three default rental plans
   % script/generate migration default_plans 
   % rake db:migrate # add the default plans
+  # generate the DVD data from the IMDB data set
+  % data/make-input.rb
+  % script/generate migration load_dvds
+  % rake db:migrate # add 7000 records (created from mysqldump)
+  # generate a view for easy indexing artist/dvd pairs
+  % script/generate migration create_view_artists_dvds
+  % rake db:migrate # create view artists_dvds
+  % script/generate migration create_view_customers_dvds
+  % rake db:migrate # create view customers_dvds
   
   # and if I change my mind
   % rake db:rollback # undo previous migration
+  
+  # admin commands 
+  % rake --help | grep 'admin:'
 
   # TODO
-  # create a controller to handle the administrative tasks
-  #   - new dvd
-  #   - drop dvd
+  # open question: 
+  #   - user w/ negative balance closes?
+  #     - should add inactive column?
+  #     - just do it
+  # rake tasks to do administrative tasks
+  #   - add dvds
   #   - generate unpopularity report
   #   - ship dvds
-  % script/generate controller admin
+  #   - generate bills
+  #   - drop dvds
   # create a controller to handle welcome tasks
   #   - login (existing user)
   #   - register (new user)
@@ -40,10 +56,11 @@ Sequence of commands thus far:
   # create a controller to handle the user tasks
   #   - drop membership
   #   - dvd query
-  #   - purchase / return
-  #   - rent / return
-  #   - get monthly bill
+  #     - purchase (add to cart, n copies)/ return
+  #     - rent / return
   #   - make payment
+  #   - show monthly bill
+  #   - show announcements
   % script/generate controller user
 
 Added table constraints, and join statements

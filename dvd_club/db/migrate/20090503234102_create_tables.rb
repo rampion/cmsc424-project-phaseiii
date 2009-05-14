@@ -32,21 +32,21 @@ class CreateTables < ActiveRecord::Migration
     create_table :genres do |t|
       t.string :name, :null => false
     end
-    create_table :appeared_in do |t|
-      t.references :artist
-      t.references :dvd
+    create_table :appeared_in, :id => false do |t|
+      t.references :artist, :null => false
+      t.references :dvd, :null => false
     end
-    create_table :directed do |t|
-      t.references :artist
-      t.references :dvd
+    create_table :directed, :id => false do |t|
+      t.references :artist, :null => false
+      t.references :dvd, :null => false
     end
-    create_table :produced do |t|
-      t.references :artist
-      t.references :dvd
+    create_table :produced, :id => false do |t|
+      t.references :artist, :null => false
+      t.references :dvd, :null => false
     end
-    create_table :dvd_genre do |t|
-      t.references :genre
-      t.references :dvd
+    create_table :dvds_genres, :id => false do |t|
+      t.references :genre, :null => false
+      t.references :dvd, :null => false
     end
     create_table :purchases do |t|
       t.references :customer

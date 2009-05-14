@@ -1,5 +1,10 @@
+#!/usr/bin/env ruby
 require 'set'
 require 'yaml'
+require 'fileutils'
+
+FileUtils.cd( File.dirname(__FILE__) )
+
 MOVIES_H = {}
 puts "reading in movies"
 File.open('movies.list.reduced.80s') do |m_f|
@@ -13,7 +18,9 @@ File.open('movies.list.reduced.80s') do |m_f|
         :stars => Set.new, 
         :directors => Set.new,
         :producers => Set.new,
-        :genres => Set.new
+        :genres => Set.new,
+        :list_price => rand(10).to_f + 10.99,
+        :copies => 10 * (rand(10)+1)
       }
     end
   end
@@ -59,8 +66,10 @@ MOVIES.each do |movie|
   end
 end
 WIDTH = 1000
+n = ?A - 1
 (0...MOVIES.size).step(WIDTH) do |min|
-  filename = "temp-#{min}.out"
+  n += 1
+  filename = "input-#{n.chr}.yaml"
   puts "writing out #{filename}"
   File.open(filename, 'w') do |f|
     f.puts YAML::dump( MOVIES[min,WIDTH] )
