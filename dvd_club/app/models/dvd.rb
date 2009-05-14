@@ -9,14 +9,14 @@ class Dvd < ActiveRecord::Base
   has_and_belongs_to_many :directors, :class_name => 'Artist', :join_table => :directed
   has_and_belongs_to_many :producers, :class_name => 'Artist', :join_table => :produced
   has_and_belongs_to_many :genres
-  validate do |dvd|
-    unless dvd.copies >= 0
+  def validate 
+    unless self.copies >= 0
       errors.add_to_base("Copies in stock must be non-negative")
     end
-    unless dvd.list_price >= 0
+    unless self.list_price >= 0
       errors.add_to_base("List price must be non-negative")
     end
-    unless dvd.sale_price >= 0
+    unless self.sale_price >= 0
       errors.add_to_base("Sale price must be non-negative")
     end
   end

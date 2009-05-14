@@ -7,14 +7,10 @@ class Customer < ActiveRecord::Base
   has_and_belongs_to_many :dvds_currently_rented, :class_name => 'Dvd', :join_table => :rentals, :conditions => { :date_returned => nil }
   has_many :payments
   belongs_to :rental_plan
-  validate do |customer|
-    unless customer.credit_limit >= 0
+  def validate
+    unless self.credit_limit >= 0
       errors.add_to_base("Customer must have non-negative credit limit")
     end
-    # don't let an overdrawn customer rent or purchase
-    #unless customer.credit_limit >= customer.balance
-      #errors.add_to_base("Customer balance must not exceed credit limit")
-    #end
   end
   def overdrawn?
     self.balance >= self.credit_limit

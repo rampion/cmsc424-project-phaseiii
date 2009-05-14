@@ -88,14 +88,15 @@ namespace :admin do
     now = Date.today
     Customer.find(:all, :conditions => 'balance > 0').each do |customer|
       prior_balance = customer.balance
-      purchases = Purchase.find(:all, :conditions => [ "date_purchased > ?", customer.last_bill_end_date ] )
-      returns = Purchase.find(:all, :conditions => [ "date_returned > ?", customer.last_bill_end_date ] )
-      payments = Payment.find(:all, :conditions => [ "date_paid > ?", customer.last_bill_end_date ] )
+      purchases = customer.purchases.find(:all, :conditions => [ "date_purchased > ?", customer.last_bill_end_date ] )
+      returns = customer.purchases.find(:all, :conditions => [ "date_returned > ?", customer.last_bill_end_date ] )
+      payments = customer.payments.find(:all, :conditions => [ "date_paid > ?", customer.last_bill_end_date ] )
       prior_balance -= purchases.inject(0.0) { |sum,purchase| sum + purchase.sale_price }
       prior_balance += returns.inject(0.0) { |sum,a_return| sum + a_return.sale_price }
 
       puts "ID: #{customer.id}"
       puts customer.name
+      puts customer.address
       puts "Prior Bill Date: #{customer.last_bill_end_date}"
       puts "Prior Balance: $%.2f" % prior_balance
 
@@ -103,18 +104,18 @@ namespace :admin do
               returns.map { |a_return|      [a_return.date_returned, :return, a_return] } +
               payments.map { |a_payment|    [a_payment.date_paid, :payment, a_payment] }
 
-      date = customer.date_subscribed + customer.plan.billing_cycle_length
+      date = customer.date_subscribed + customer.rental_plan.billing_cycle_length
       while (date <= now)
         items << [date, :dues, nil ] if (customer.last_bill_end_date < date)
-        date += customer.plan.billing_cycle_length
+        date += customer.rental_plan.billing_cycle_length.months
       end
 
-      items.sort do |date,type,item|
+      items.each do |date,type,item|
         print "#{date}\t#{type}\t"
         case type
         when :dues
-          puts "\t\t+$%.2f" % customer.plan.rate
-          customer.balance += customer.plan.rate
+          puts "\t\t+$%.2f" % customer.rental_plan.rate
+          customer.balance += customer.rental_plan.rate
         when :payment 
           puts "\t\t-$%.2f" % item.amount
         when :purchase
@@ -147,7 +148,7 @@ namespace :admin do
       start_date = ENV['START']   ? Date.parse(ENV['START'])  : Date.today - 1.year
       stop_date  = ENV['END']     ? Date.parse(ENV['END'])    : Date.today
       limit      = ENV['LIMIT']   ? ENV['LIMIT'].to_i         : 10
-      overlap    = ENV['OVERLAP'] ? ENV['OVERLAP'].to_i       : 55
+      overlap    = ENV['OVERLAP'] ? ENV['OVERLAP'].to_i       : 10
 
       STDERR.puts "finding unpopular DVDs"
       # find which DVDs were unpopular
@@ -183,8 +184,18 @@ namespace :admin do
       connection.execute(<<-SQL)
         CREATE TEMPORARY TABLE similar_dvds
           ( SELECT dvd_id FROM dvds_genres INNER JOIN unpopular_genres USING (genre_id)) 
-        UNION ALL 
+        UNION
           ( SELECT dvd_id FROM artists_dvds INNER JOIN unpopular_artists USING (artist_id))
+      SQL
+
+      STDERR.puts "finding customers who've watched enough similar DVDs in the past year"
+      connection.execute(sanitize_sql([<<-SQL, overlap]))
+        CREATE TEMPORARY TABLE similar_customers
+          SELECT customer_id
+          FROM similar_dvds sd  INNER JOIN customers_dvds cd USING (dvd_id)
+          WHERE cd.date >= TIMESTAMPADD(YEAR,-1,NOW())
+          GROUP BY customer_id
+          HAVING COUNT(sd.dvd_id) > ?
       SQL
 
       STDERR.puts "finding customers active in the last 6 months"
@@ -201,13 +212,9 @@ namespace :admin do
       # find which recent customers rented or purchased something similar to the
       # unpopular DVDs in the past year
       potentially_interested = Customer.find_by_sql([ <<-SQL, overlap ])
-        SELECT c.*
-        FROM similar_dvds sd  INNER JOIN customers_dvds cd USING (dvd_id)
-                              INNER JOIN recent_customers rc USING (customer_id)
+        SELECT c.* FROM
+         similar_customers sc INNER JOIN recent_customers rc ON (sc.customer_id = rc.customer_id) 
                               INNER JOIN customers c ON (c.id = rc.customer_id)
-        WHERE cd.date >= TIMESTAMPADD(YEAR,-1,NOW())
-        GROUP BY rc.customer_id
-        HAVING COUNT(sd.dvd_id) > ?
       SQL
       unpopular_dvds = Dvd.find_by_sql(<<-SQL)
         SELECT d.* FROM unpopular_dvds ud INNER JOIN dvds d ON (ud.dvd_id = d.id)
@@ -215,7 +222,7 @@ namespace :admin do
       
       puts "Send Announcements to:"
       potentially_interested.each do |customer|
-        puts "\t#{customer.name}"
+        puts "\t#{customer.name} (id #{customer.id}), #{customer.address}"
       end
       puts "-"*78
       puts "of sale prices for these DVDs"
