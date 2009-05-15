@@ -2,9 +2,17 @@ namespace :admin do
   desc "Ship DVDs; ship all rentals and purchases"
   task(:ship_dvds => :environment) do
     unshipped_purchases = Purchase.find(:all, :conditions => { :date_shipped => nil }) 
-    Purchase.update( unshipped_purchases, Array.new(unshipped_purchases.size, { :date_shipped => Date.today } ))
+    unshipped_purchases.each do |p| 
+      p.date_shipped = Date.today
+      p.save!
+      puts "shipped purchase #{p.id} \"#{p.dvd.title_year}\" to #{p.customer.name} at #{p.customer.address}"
+    end
     unshipped_rentals = Rental.find(:all, :conditions => { :date_shipped => nil })
-    Rental.update( unshipped_rentals , Array.new(unshipped_rentals.size, { :date_shipped => Date.today } ))
+    unshipped_rentals.each do |r|
+      r.date_shipped = Date.today
+      r.save!
+      puts "shipped rental #{r.id} \"#{r.dvd.title_year}\" to #{r.customer.name} at #{r.customer.address}"
+    end
   end
   desc "Drop DVD; mark a given DVD as no longer available (use TITLE=<dvd title> YEAR=<dvd year>)"
   task(:drop_dvd => :environment) do 
@@ -30,9 +38,16 @@ namespace :admin do
       break
     end
     begin
-      rental = Rental.update(rental_id.to_i, { :date_returned => Date.today })
+      rental = Rental.find(rental_id.to_i)
+      if rental.date_returned
+        STDERR.puts "Can't return - already returned"
+        break
+      end
+      rental.date_returned = Date.today
       rental.dvd.copies += 1
-      rental.save
+      rental.dvd.save!
+      rental.save!
+      puts "returned rental of \"#{rental.dvd.title_year}\" by #{rental.customer.name}"
     rescue ActiveRecord::RecordNotFound
       STDERR.puts "Unable to find rental #{rental_id}"
       break
@@ -46,14 +61,20 @@ namespace :admin do
     end
     begin
       purchase = Purchase.find(purchase_id.to_i)
-      if purchase.date_shipped + 90.days < Date.today
+      if purchase.date_returned
+        STDERR.puts "Cannot return - already returned"
+        break
+      elsif purchase.date_shipped + 90.days < Date.today
         STDERR.puts "Cannot return - past 90 day mark"
         break
       end
       purchase.date_returned = Date.today
       purchase.dvd.copies += 1
+      purchase.dvd.save!
       purchase.customer.balance -= purchase.sale_price
-      purchase.save
+      purchase.customer.save!
+      purchase.save!
+      puts "returned purchase of \"#{purchase.dvd.title_year}\" by #{purchase.customer.name}"
     rescue ActiveRecord::RecordNotFound
       STDERR.puts "Unable to find purchase #{purchase_id}"
       break
@@ -77,7 +98,7 @@ namespace :admin do
       customer = Customer.find(customer_id.to_i)
       customer.payments << Payment.create(:date_paid => Date.today, :amount => amount.to_f)
       customer.balance -= amount.to_f
-      customer.save
+      customer.save!
     rescue ActiveRecord::RecordNotFound
       STDERR.puts "Unable to find customer #{customer_id}"
       break
@@ -129,7 +150,7 @@ namespace :admin do
       puts "Balance: %.2f" % customer.balance
 
       customer.last_bill_end_date = now
-      customer.save
+      customer.save!
       puts "-"*78
     end
   end
@@ -228,7 +249,7 @@ namespace :admin do
       puts "of sale prices for these DVDs"
       unpopular_dvds.each do |dvd|
         dvd.sale_price = 0.8 * dvd.list_price
-        dvd.save
+        dvd.save!
         puts "\t%s\t$%.2f" % [ dvd.title, dvd.sale_price ]
       end
     end
@@ -239,7 +260,7 @@ namespace :admin do
     Dvd.find(:all, :conditions => { :is_new => true }).each do |dvd|
       dvd.is_new = false
       dvd.sale_price = dvd.list_price
-      dvd.save
+      dvd.save!
       STDERR.print "."
       STDERR.flush
     end
@@ -281,7 +302,7 @@ namespace :admin do
         #p :genre_name => genre_name, :genre => genre
         dvd.genres << genre
       end
-      dvd.save
+      dvd.save!
       STDERR.print "."
       STDERR.flush
     end

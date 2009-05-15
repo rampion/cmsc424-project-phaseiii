@@ -25,13 +25,17 @@ Sequence of commands thus far:
   % rake db:migrate # add the default plans
   # generate the DVD data from the IMDB data set
   % data/make-input.rb
+  % rake db:add_new_dvd ...
   % script/generate migration load_dvds
+  % mysqldump --user root dvd_club_development dvds artists genres appeared_in dvds_genres produced directors > db/migrate/20090514024013_load_dvds.sql
   % rake db:migrate # add 7000 records (created from mysqldump)
   # generate a view for easy indexing artist/dvd pairs
   % script/generate migration create_view_artists_dvds
   % rake db:migrate # create view artists_dvds
   % script/generate migration create_view_customers_dvds
   % rake db:migrate # create view customers_dvds
+  # generate some customer activity...
+  % mysqldump --user root dvd_club_development customers payments purchases rentals > db/migrate/20090515151922_load_customer_activity.sql
   
   # and if I change my mind
   % rake db:rollback # undo previous migration

@@ -1,6 +1,7 @@
 class WelcomeController < ApplicationController
   layout 'standard'
   def index
+    flash[:notice] = nil
     # shouldn't need to do much
     if request.post?
       # POST: redirect to user/index
@@ -50,7 +51,7 @@ class WelcomeController < ApplicationController
               :balance => rental_plan.rate,
               :rental_plan => rental_plan
         )
-        customer.save
+        customer.save!
         session[:customer_id] = customer.id
         # redirect to login 
         redirect_to :controller => 'user'

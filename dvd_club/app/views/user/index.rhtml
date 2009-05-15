@@ -4,7 +4,8 @@
 <% end %>
 
 <div class="box">
-Hi <%= @customer.name %>!
+  Hi <%= @customer.name %>! <br/>
+  (customer id <%= @customer.id %>)
 <ul>
   <li>Your balance is $<%= '%.2f' % @customer.balance %>
   <li>Your credit limit is $<%= '%.2f' % @customer.credit_limit %>
@@ -37,11 +38,12 @@ Hi <%= @customer.name %>!
 <div class='box'>
   <h3>Shopping Cart</h3>
   <% form_for :checkout, :url => { :action => :checkout }  do |f| %>
-  <ul>
+  <table>
+    <tr><th>title</th><th>quantity</th></tr>
     <% @dvds.each do |dvd| %>
-      <li> <%= h dvd.title %> (<%= dvd.year %>) <%= f.text_field "#{dvd.id}", :size => 3, :value => 1 %></li>
+      <tr><td><%= h dvd.title %> (<%= dvd.year %>)</td><td><%= f.text_field "#{dvd.id}", :size => 3, :value => 1 %></td></tr>
     <% end %>
-  </ul>
-    <%= submit_tag 'Checkout' %>
+    <tr><td></td><td><%= submit_tag 'Checkout' %></td></tr>
+  </table>
   <% end %>
 </div>

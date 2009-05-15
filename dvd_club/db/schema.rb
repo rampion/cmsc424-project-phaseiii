@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090514071943) do
+ActiveRecord::Schema.define(:version => 20090515151922) do
 
   create_table "appeared_in", :id => false, :force => true do |t|
     t.integer "artist_id", :null => false

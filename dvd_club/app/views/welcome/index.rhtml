@@ -1,6 +1,3 @@
-<% if flash[:notice] %>
-  <div><%= h flash[:notice] %></div>
-<% end %>
 <div><span id='welcome'>Welcome to the Simmonds-Easterly DVD Club!</span></div>
 <div>
   <p>If you're not a member already, maybe you'd like to <%= link_to 'register', 'register' %></p>
@@ -9,3 +6,6 @@
     <p>Or, if you're already registered, why don't you <%= submit_tag "Login" %><%= f.text_field :name%></p>
   <% end %>
 </div>
+<% if flash[:notice] %>
+  <div><%= h flash[:notice] %></div>
+<% end %>

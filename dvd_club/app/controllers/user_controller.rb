@@ -50,11 +50,13 @@ class UserController < ApplicationController
       end
       order.each do |dvd, count|
         count.times do 
+          dvd.copies -= 1
+          dvd.save!
           @customer.purchases.create('dvd_id' => dvd.id, 'sale_price' => dvd.sale_price, 'date_purchased' => Date.today )
         end
       end
       @customer.balance += total
-      @customer.save
+      @customer.save!
       flash[:notice] = "Your DVDs will be shipped shortly"
       session[:cart] = nil
     end
@@ -77,8 +79,10 @@ class UserController < ApplicationController
         flash[:notice] = "Sorry, this title is out of stock"
         return
       end
+      dvd.copies -= 1
+      dvd.save!
       @customer.rentals.create( 'dvd_id' => dvd.id, 'date_rented' => Date.today )
-      @customer.save
+      @customer.save!
       flash[:notice] = "Your DVD will be shipped shortly"
     end
   end
@@ -88,7 +92,7 @@ class UserController < ApplicationController
     else
       sql_re = lambda { |str| str.downcase.gsub(/^|$/, '%').gsub(/[^a-z]+/, '%') }
       join = ['dvds d']
-      where = []
+      where = ['d.is_discontinued = 0']
       subs = []
       having = []
       search = request[:search]
