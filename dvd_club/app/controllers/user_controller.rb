@@ -129,17 +129,18 @@ class UserController < ApplicationController
       end
       unless search[:genre].empty?
         join << 'INNER JOIN dvds_genres dg ON (d.id = dg.dvd_id)'
-        join << 'INNER JOIN genre g ON (dg.artist_id = g.id)'
+        join << 'INNER JOIN genres g ON (dg.genre_id = g.id)'
         where << 'g.name like ?'
-        subs <<  sql_re[search[:producer]]
+        subs <<  sql_re[search[:genre]]
       end
       unless search[:price_range].empty?
-        if search[:price_range].strip =~ /^\$?(\d+(?:,\d{3})\.\d\d)$/
+        price_re = /\$?(\d+(?:,\d{3})*(?:\.\d\d)?)/
+        if search[:price_range].strip =~ /^#{price_re}$/
           where << 'd.sale_price = ?'
           subs << $1.gsub(',','').to_f
-        elsif search[:year_range].strip =~ /^\$?(\d+(?:,\d{3})\.\d\d)\s*(?:\s|[-:]+)\s*(\d+(?:,\d{3})\.\d\d\$)$/
+        elsif search[:price_range].strip =~ /^#{price_re}\s*(?:\s|[-:]+)\s*#{price_re}$/
           where << '? <= d.sale_price' << 'd.sale_price <= ?'
-          subs << $1.to_i << $2.to_i
+          subs << $1.to_f << $2.to_f
         else
           flash[:notice] ||= "I'm sorry, I couldn't understand your price range, try $19.85 or $19-$25.35"
           return
