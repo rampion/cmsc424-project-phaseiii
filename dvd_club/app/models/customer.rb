@@ -8,7 +8,7 @@ class Customer < ActiveRecord::Base
   has_many :payments
   belongs_to :rental_plan
   def validate
-    unless self.credit_limit >= 0
+    unless self.credit_limit and self.credit_limit >= 0
       errors.add_to_base("Customer must have non-negative credit limit")
     end
   end

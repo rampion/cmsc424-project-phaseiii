@@ -3,8 +3,11 @@ class Purchase < ActiveRecord::Base
   belongs_to :customer
   protected
   def validate
-    unless self.sale_price >= 0
+    unless self.sale_price and self.sale_price >= 0
       errors.add_to_base("Sale price must be non-negative")
+    end
+    unless self.date_purchased
+      errors.add_to_base("Date purchased may not be null")
     end
     if self.date_shipped and (self.date_shipped < self.date_purchased)
       errors.add_to_base("Cannot be shipped until it has been purchased")

@@ -2,6 +2,9 @@ class Rental < ActiveRecord::Base
   belongs_to :dvd
   belongs_to :customer
   def validate
+    unless date_rented
+      errors.add_to_base("Date rented may not be null")
+    end
     if self.date_shipped and (self.date_shipped < self.date_rented)
       errors.add_to_base("Cannot be shipped until it has been rented")
     end
